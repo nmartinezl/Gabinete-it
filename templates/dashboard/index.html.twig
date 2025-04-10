@@ -1,0 +1,48 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Panel de Control{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
+    <link href="/css/dashboard.css" rel="stylesheet">
+{% endblock %}
+
+{% block body %}
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+    <div class="container">
+        <a class="navbar-brand" href="#">Gabinete IT</a>
+        <div class="d-flex ms-auto text-white">
+            Bienvenido, {{ app.user.userIdentifier }}
+            <a href="{{ path('app_logout') }}" class="btn btn-sm btn-light ms-3">Cerrar sesión</a>
+        </div>
+    </div>
+</nav>
+
+<div class="container mt-5">
+    <h2 class="text-center mb-4">Panel de Control del Sistema</h2>
+
+    <div class="row justify-content-center">
+        {% for label, routeName in sections %}
+            <div class="col-md-4 col-lg-3 mb-4">
+                <div class="card h-100 shadow border-0">
+                    <div class="card-body text-center">
+                        {% set icons = {
+                            'Tareas': 'clipboard-check',
+                            'Equipos': 'cpu',
+                            'Usuarios': 'people',
+                            'Insumos': 'box',
+                            'Solicitudes': 'envelope'
+                        } %}
+                        <i class="bi bi-{{ icons[label]|default('grid') }} display-4 text-primary mb-3"></i>
+                        <h5 class="card-title">{{ label }}</h5>
+                        <a href="{{ path(routeName) }}" class="btn btn-outline-primary mt-2">
+                            Ir a {{ label }}
+                        </a>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

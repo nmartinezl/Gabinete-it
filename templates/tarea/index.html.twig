@@ -1,0 +1,63 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Listado de Tareas{% endblock %}
+
+{% block body %}
+<div class="container mt-4">
+    <h1 class="mb-4 text-center">📋 Listado de Tareas</h1>
+
+    <div class="text-end mb-3">
+        <a href="{{ path('tarea_nueva') }}" class="btn btn-success">+ Nueva Tarea</a>
+    </div>
+
+    {% if tareas is empty %}
+        <div class="alert alert-info">No hay tareas registradas.</div>
+    {% else %}
+        <table class="table table-bordered table-hover table-striped">
+            <thead class="table-dark">
+                <tr>
+                    <th>#</th>
+                    <th>Título</th>
+                    <th>Descripción</th>
+                    <th>Fecha Límite</th>
+                    <th>Equipo</th>
+                    <th>Técnico</th>
+                    <th>Estado</th>
+                    <th>Prioridad</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for tarea in tareas %}
+                    <tr>
+                        <td>{{ tarea.id }}</td>
+                        <td>{{ tarea.titulo }}</td>
+                        <td>{{ tarea.descripcion }}</td>
+                        <td>{{ tarea.fechaLimite ? tarea.fechaLimite|date('d/m/Y H:i') : 'Sin fecha' }}</td>
+                        <td>{{ tarea.equipo ? tarea.equipo.tipo ~ ' - ' ~ tarea.equipo.marca : 'No asignado' }}</td>
+                        <td>{{ tarea.tecnico ? tarea.tecnico.email : 'Sin asignar' }}</td>
+                        <td><span class="badge bg-warning text-dark">{{ tarea.estado }}</span></td>
+                        <td><span class="badge bg-info text-dark">{{ tarea.prioridad }}</span></td>
+                        <td class="d-flex flex-wrap gap-1">
+                            <a href="{{ path('tarea_ver', {id: tarea.id}) }}" class="btn btn-sm btn-info">
+                                <i class="bi bi-eye"></i> Ver
+                            </a>
+
+                            <a href="{{ path('tarea_editar', {id: tarea.id}) }}" class="btn btn-sm btn-primary">
+                                <i class="bi bi-pencil-square"></i> Editar
+                            </a>
+
+                            <form action="{{ path('tarea_eliminar', {id: tarea.id}) }}" method="post" onsubmit="return confirm('¿Estás seguro de que deseas eliminar esta tarea?');">
+                                <input type="hidden" name="_token" value="{{ csrf_token('eliminar_tarea_' ~ tarea.id) }}">
+                                <button class="btn btn-sm btn-danger">
+                                    <i class="bi bi-trash"></i> Eliminar
+                                </button>
+                            </form>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% endif %}
+</div>
+{% endblock %}

@@ -1,0 +1,54 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Equipo{% endblock %}
+
+{% block body %}
+    <h1>Equipo</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ equipo.id }}</td>
+            </tr>
+            <tr>
+                <th>Tipo</th>
+                <td>{{ equipo.tipo }}</td>
+            </tr>
+            <tr>
+                <th>Marca</th>
+                <td>{{ equipo.marca }}</td>
+            </tr>
+            <tr>
+                <th>Modelo</th>
+                <td>{{ equipo.modelo }}</td>
+            </tr>
+            <tr>
+                <th>NumeroSerie</th>
+                <td>{{ equipo.numeroSerie }}</td>
+            </tr>
+            <tr>
+                <th>Estado</th>
+                <td>{{ equipo.estado }}</td>
+            </tr>
+            <tr>
+                <th>FechaAdquisicion</th>
+                <td>{{ equipo.fechaAdquisicion ? equipo.fechaAdquisicion|date('Y-m-d H:i:s') : '' }}</td>
+            </tr>
+            <tr>
+                <th>Ubicacion</th>
+                <td>{{ equipo.ubicacion }}</td>
+            </tr>
+            <tr>
+                <th>Observaciones</th>
+                <td>{{ equipo.observaciones }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_equipo_index') }}">back to list</a>
+
+    <a href="{{ path('app_equipo_edit', {'id': equipo.id}) }}">edit</a>
+
+    {{ include('equipo/_delete_form.html.twig') }}
+{% endblock %}

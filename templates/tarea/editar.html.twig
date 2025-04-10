@@ -1,0 +1,42 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Editar Tarea{% endblock %}
+
+{% block body %}
+<div class="container mt-4">
+    <h1 class="mb-4">Editar Tarea #{{ tarea.id }}</h1>
+
+    {{ form_start(form) }}
+        <div class="mb-3">
+            {{ form_label(form.titulo) }}
+            {{ form_widget(form.titulo, {'attr': {'class': 'form-control'}}) }}
+        </div>
+        <div class="mb-3">
+            {{ form_label(form.descripcion) }}
+            {{ form_widget(form.descripcion, {'attr': {'class': 'form-control'}}) }}
+        </div>
+        <div class="mb-3">
+            {{ form_label(form.fechaLimite) }}
+            {{ form_widget(form.fechaLimite, {'attr': {'class': 'form-control'}}) }}
+        </div>
+
+        {# Solo mostrar si el campo está disponible (por ejemplo técnico/equipo) #}
+        {% if form.tecnico is defined %}
+        <div class="mb-3">
+            {{ form_label(form.tecnico) }}
+            {{ form_widget(form.tecnico, {'attr': {'class': 'form-control'}}) }}
+        </div>
+        {% endif %}
+
+        {% if form.equipo is defined %}
+        <div class="mb-3">
+            {{ form_label(form.equipo) }}
+            {{ form_widget(form.equipo, {'attr': {'class': 'form-control'}}) }}
+        </div>
+        {% endif %}
+
+        <button class="btn btn-primary">Guardar Cambios</button>
+        <a href="{{ path('tarea_index') }}" class="btn btn-secondary">Cancelar</a>
+    {{ form_end(form) }}
+</div>
+{% endblock %}

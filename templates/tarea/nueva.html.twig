@@ -1,0 +1,32 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Nueva Tarea{% endblock %}
+
+{% block body %}
+<div class="container mt-4">
+    <h1 class="mb-4">Crear Nueva Tarea</h1>
+
+    {{ form_start(form) }}
+        <div class="mb-3">
+            {{ form_label(form.titulo) }}
+            {{ form_widget(form.titulo, {'attr': {'class': 'form-control'}}) }}
+            {{ form_errors(form.titulo) }}
+        </div>
+
+        <div class="mb-3">
+            {{ form_label(form.descripcion) }}
+            {{ form_widget(form.descripcion, {'attr': {'class': 'form-control'}}) }}
+            {{ form_errors(form.descripcion) }}
+        </div>
+
+        <div class="mb-3">
+            {{ form_label(form.fechaLimite) }}
+            {{ form_widget(form.fechaLimite, {'attr': {'class': 'form-control'}}) }}
+            {{ form_errors(form.fechaLimite) }}
+        </div>
+
+        <button type="submit" class="btn btn-primary">Guardar</button>
+        <a href="{{ path('tarea_index') }}" class="btn btn-secondary">Cancelar</a>
+    {{ form_end(form) }}
+</div>
+{% endblock %}

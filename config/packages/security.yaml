@@ -1,0 +1,41 @@
+security:
+    password_hashers:
+        Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface: 'auto'
+
+    providers:
+        app_user_provider:
+            entity:
+                class: App\Entity\Usuario
+                property: email
+
+    firewalls:
+        dev:
+            pattern: ^/(_(profiler|wdt)|css|images|js)/
+            security: false
+
+        main:
+            lazy: true
+            provider: app_user_provider
+            custom_authenticator: App\Security\SecurityControllerAuthenticator
+            logout:
+                path: app_logout
+                target: /login
+            remember_me:
+                secret: '%kernel.secret%'
+                lifetime: 604800
+                path: /
+
+    access_control:
+        # Acceso público
+        - { path: ^/login, roles: PUBLIC_ACCESS }
+        - { path: ^/$, roles: PUBLIC_ACCESS }
+
+        # Acceso por roles
+        - { path: ^/admin, roles: ROLE_ADMIN }
+        - { path: ^/jefe, roles: ROLE_JEFE }
+        - { path: ^/tecnico, roles: ROLE_TECNICO }
+        - { path: ^/usuario, roles: ROLE_USUARIO }
+
+        # Todo lo demás requiere estar autenticado
+        - { path: ^/dashboard, roles: IS_AUTHENTICATED_FULLY }
+        - { path: ^/, roles: IS_AUTHENTICATED_FULLY }

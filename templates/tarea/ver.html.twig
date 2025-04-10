@@ -1,0 +1,50 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Detalle de Tarea{% endblock %}
+
+{% block body %}
+<div class="container mt-4">
+    <h1 class="mb-4">📄 Detalle de la Tarea #{{ tarea.id }}</h1>
+
+    <table class="table table-bordered">
+        <tr>
+            <th>Título</th>
+            <td>{{ tarea.titulo }}</td>
+        </tr>
+        <tr>
+            <th>Descripción</th>
+            <td>{{ tarea.descripcion }}</td>
+        </tr>
+        <tr>
+            <th>Fecha de Creación</th>
+            <td>{{ tarea.fechaCreacion ? tarea.fechaCreacion|date('d/m/Y H:i') : 'N/A' }}</td>
+        </tr>
+        <tr>
+            <th>Fecha Límite</th>
+            <td>{{ tarea.fechaLimite ? tarea.fechaLimite|date('d/m/Y H:i') : 'N/A' }}</td>
+        </tr>
+        <tr>
+            <th>Estado</th>
+            <td><span class="badge bg-warning text-dark">{{ tarea.estado }}</span></td>
+        </tr>
+        <tr>
+            <th>Prioridad</th>
+            <td><span class="badge bg-info text-dark">{{ tarea.prioridad }}</span></td>
+        </tr>
+        <tr>
+            <th>Equipo</th>
+            <td>
+                {{ tarea.equipo ? tarea.equipo.tipo ~ ' - ' ~ tarea.equipo.marca : 'No asignado' }}
+            </td>
+        </tr>
+        <tr>
+            <th>Técnico</th>
+            <td>{{ tarea.tecnico ? tarea.tecnico.email : 'Sin asignar' }}</td>
+        </tr>
+    </table>
+
+    <a href="{{ path('tarea_index') }}" class="btn btn-secondary mt-3">
+        <i class="bi bi-arrow-left"></i> Volver al listado
+    </a>
+</div>
+{% endblock %}
